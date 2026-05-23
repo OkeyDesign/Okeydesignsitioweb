@@ -1,0 +1,57 @@
+/* ========================================
+   Slick Carousel Customization
+   ======================================== */
+
+/* Gallery Carousel - Main styles */
+.gallery-carousel .slick-dots {
+  bottom: -40px;
+}
+
+.gallery-carousel .slick-dots li button:before {
+  font-size: 10px;
+  color: #16273F;
+  opacity: 0.3;
+}
+
+.gallery-carousel .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #16273F;
+}
+
+/* Lightbox Carousel */
+.lightbox-carousel .slick-dots {
+  bottom: 20px;
+}
+
+.lightbox-carousel .slick-dots li button:before {
+  font-size: 12px;
+  color: white;
+  opacity: 0.5;
+}
+
+.lightbox-carousel .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: white;
+}
+
+/* Arrow positioning fixes */
+.gallery-carousel .slick-prev,
+.gallery-carousel .slick-next {
+  z-index: 10;
+}
+
+.gallery-carousel .slick-prev {
+  left: 16px;
+}
+
+.gallery-carousel .slick-next {
+  right: 16px;
+}
+
+/* Hide default arrows (using custom ones) */
+.gallery-carousel .slick-prev:before,
+.gallery-carousel .slick-next:before,
+.lightbox-carousel .slick-prev:before,
+.lightbox-carousel .slick-next:before {
+  display: none;
+}

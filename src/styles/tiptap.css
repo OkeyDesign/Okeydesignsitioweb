@@ -1,0 +1,298 @@
+/* ══════════════════════════════════════════════════════════
+   TipTap Editor & Public Blog Styles
+
+   Paleta de categorías:
+   #FBAE05 | #0891A5 | #77605A | #EDD536
+   #E4585C | #8165A2 | #529D82 | #16273F
+   ══════════════════════════════════════════════════════════ */
+
+/* ── TipTap Editor Styles ── */
+
+/* Editor container */
+.tiptap-editor .ProseMirror {
+  outline: none;
+  min-height: 200px;
+  padding: 1rem 1.25rem;
+  color: #1f2937;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+/* Spacing between block elements */
+.tiptap-editor .ProseMirror > * + * {
+  margin-top: 0.75em;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HEADINGS EN EL EDITOR — estilos base (todos los contextos)
+   ══════════════════════════════════════════════════════════ */
+
+.tiptap-editor .ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #16273F;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.tiptap-editor .ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #16273F;
+  margin-top: 2em;
+  margin-bottom: 0.4em;
+}
+
+.tiptap-editor .ProseMirror h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #374151;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HEADINGS EN MODO BLOG — espaciado específico del blog
+   (sin overrides de color; se usan los colores neutros base)
+   ══════════════════════════════════════════════════════════ */
+
+.tiptap-blog-mode .tiptap-editor .ProseMirror h2 {
+  margin-top: 2.75em !important;
+  margin-bottom: 0.4em !important;
+  padding-top: 0.5em !important;
+}
+
+/* ══════════════════════════════════════════════════════════
+   COLOR DE TEXTO PERSONALIZADO (TextColor extension)
+   El span con style="color:..." siempre gana sobre la herencia
+   de color de heading/bold en el editor.
+   ══════════════════════════════════════════════════════════ */
+.tiptap-editor .ProseMirror span[style*="color"] {
+  /* Let the inline style win — no override here */
+}
+
+/* Lists */
+.tiptap-editor .ProseMirror ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+.tiptap-editor .ProseMirror ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+.tiptap-editor .ProseMirror li + li {
+  margin-top: 0.25em;
+}
+
+/* Blockquote */
+.tiptap-editor .ProseMirror blockquote {
+  border-left: 3px solid #d1d5db;
+  padding-left: 1rem;
+  color: #6b7280;
+  font-style: italic;
+  margin-left: 0;
+}
+
+/* Code inline */
+.tiptap-editor .ProseMirror code {
+  background: #f3f4f6;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.875em;
+  color: #16273F;
+}
+
+/* Code block */
+.tiptap-editor .ProseMirror pre {
+  background: #1f2937;
+  color: #f9fafb;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: 0.875em;
+}
+.tiptap-editor .ProseMirror pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* Links */
+.tiptap-editor .ProseMirror a {
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Highlight */
+.tiptap-editor .ProseMirror mark {
+  background: #fef08a;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+/* Horizontal rule */
+.tiptap-editor .ProseMirror hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 1.5em 0;
+}
+
+/* Text align */
+.tiptap-editor .ProseMirror [style*="text-align: center"] { text-align: center; }
+.tiptap-editor .ProseMirror [style*="text-align: right"] { text-align: right; }
+.tiptap-editor .ProseMirror [style*="text-align: justify"] { text-align: justify; }
+
+/* Placeholder */
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: #9ca3af;
+  float: left;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Focus ring */
+.tiptap-editor.focused .ProseMirror {
+  background: #fafafa;
+}
+
+/* Images inside TipTap editor */
+.tiptap-editor .ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  display: block;
+  margin: 0.75em 0;
+}
+
+.tiptap-editor .ProseMirror img.ProseMirror-selectednode {
+  outline: 2px solid #16273F;
+  outline-offset: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PUBLIC RENDERING STYLES — base (todos los contextos)
+   ══════════════════════════════════════════════════════════ */
+
+.tiptap-content {
+  font-size: 1.1875rem;
+  line-height: 1.8;
+  color: #374151;
+}
+.tiptap-content > * + * {
+  margin-top: 1em;
+}
+
+/* Headings base — neutros */
+.tiptap-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #16273F;
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+.tiptap-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #16273F;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.4em;
+}
+.tiptap-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.4;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PUBLIC RENDERING — MODO BLOG (con .tiptap-blog-mode)
+   Espaciado específico del blog; colores neutros base
+   ══════════════════════════════════════════════════════════ */
+
+.tiptap-blog-mode .tiptap-content h2 {
+  margin-top: 2.75em !important;
+  margin-bottom: 0.4em !important;
+  padding-top: 0.5em !important;
+}
+
+/* COLOR PERSONALIZADO en contenido público — la span siempre tiene prioridad */
+.tiptap-blog-mode .tiptap-content span[style*="color"],
+.tiptap-content span[style*="color"] {
+  /* Let inline style win */
+}
+
+/* ── Resto de estilos para .tiptap-content ── */
+
+.tiptap-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+.tiptap-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+.tiptap-content li + li {
+  margin-top: 0.25em;
+}
+.tiptap-content blockquote {
+  border-left: 3px solid #d1d5db;
+  padding-left: 1rem;
+  color: #6b7280;
+  font-style: italic;
+  margin-left: 0;
+}
+.tiptap-content code {
+  background: #f3f4f6;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.875em;
+  color: #16273F;
+}
+.tiptap-content pre {
+  background: #1f2937;
+  color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.875em;
+}
+.tiptap-content pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+.tiptap-content a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+.tiptap-content mark {
+  background: #fef08a;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.tiptap-content hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 1.5em 0;
+}
+
+/* Images inside public content */
+.tiptap-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.75rem;
+  display: block;
+  margin: 1em auto;
+}
