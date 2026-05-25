@@ -1,115 +1,199 @@
 @custom-variant dark (&:is(.dark *));
 
+/* ─────────────────────────────────────────────────────────────
+   Okey Design — tokens
+   Source: ok-design-system/project/colors_and_type.css
+   ───────────────────────────────────────────────────────────── */
+
 :root {
-  --font-size: 17px;
-  
-  /* Custom Color Palette */
-  --color-primary: #16273F;
-  --color-text-light: #F2F3F3;
-  --color-text-dark: #16273F;
-  --color-text-muted: #D5D5D4;
-  
-  /* Semantic Colors */
-  --color-semantic-1: #0891A5;
-  --color-semantic-2: #77605A;
-  --color-semantic-3: #EDD536;
-  --color-semantic-4: #E4585C;
-  --color-semantic-5: #8165A2;
-  --color-semantic-6: #529D82;
-  --color-semantic-7: #FBAE05;
-  
-  /* Neutrals */
-  --color-neutral-1: #F2F3F3;
-  --color-neutral-2: #FFFFFF;
-  --color-neutral-3: #D5D5D4;
-  --color-neutral-4: #7B797A;
-  --color-neutral-5: #242424;
-  --color-neutral-6: #303030;
-  --color-neutral-7: #000000;
-  
-  /* Surface */
-  --color-surface-1: #CECECE;
-  --color-surface-2: #FAFAFA;
-  --color-surface-3: #EDE8E6;
-  --color-surface-4: #B9B1B0;
-  --color-surface-5: #D2CCCC;
-  --color-surface-6: #F4EFED;
-  --color-surface-7: #F2F3F3;
-  
-  --background: #ffffff;
-  --foreground: oklch(0.145 0 0);
-  --card: #ffffff;
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.0058 264.53);
-  --secondary-foreground: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
-  --accent: #e9ebef;
-  --accent-foreground: #030213;
-  --destructive: #d4183d;
-  --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
-  --input: transparent;
-  --input-background: #f3f3f5;
-  --switch-background: #cbced4;
-  --font-weight-medium: 500;
+  /* ─── Brand primaries ─── */
+  --okey-primary:        #16273F;
+  --okey-secondary:      #FBAE05;
+  --okey-on-primary:     #FAFAFA;
+  --okey-on-secondary:   #16273F;
+
+  /* ─── Tertiary palette (illustration accents) ─── */
+  --okey-acc-yellow:     #EDD536;
+  --okey-acc-teal:       #0891A5;
+  --okey-acc-red:        #E4585C;
+  --okey-acc-purple:     #8165A2;
+  --okey-acc-green:      #529D82;
+  --okey-acc-brown:      #77605A;
+  --okey-acc-blue:       #3D6D9B;
+
+  /* ─── Surfaces (cream / grey ladder) ─── */
+  --okey-surface-0:      #FFFFFF;
+  --okey-surface-1:      #FAFAFA;  /* default page bg */
+  --okey-surface-2:      #F4EFED;  /* warm cream — cards */
+  --okey-surface-3:      #EDE8E6;  /* cream darker */
+  --okey-surface-4:      #F2F3F3;  /* cool grey */
+  --okey-surface-5:      #D2CCCC;
+  --okey-surface-canvas: #F2F3F3;
+
+  /* ─── Text ─── */
+  --okey-text-primary:   #16273F;
+  --okey-text-secondary: #4F6271;
+  --okey-text-muted:     #7B797A;
+  --okey-text-disabled:  #B9B1B0;
+  --okey-text-on-dark:   #FAFAFA;
+  --okey-text-link:      #0891A5;
+
+  /* ─── Neutrals ─── */
+  --okey-neutral-0:      #FFFFFF;
+  --okey-neutral-1:      #F2F3F3;
+  --okey-neutral-2:      #EDE8E6;
+  --okey-neutral-3:      #D5D5D4;
+  --okey-neutral-4:      #CECECE;
+  --okey-neutral-5:      #B9B1B0;
+  --okey-neutral-6:      #7B797A;
+  --okey-neutral-7:      #594A47;
+  --okey-neutral-8:      #303030;
+  --okey-neutral-9:      #242424;
+  --okey-neutral-10:     #000000;
+
+  /* ─── Borders ─── */
+  --okey-border-soft:    #EDE8E6;
+  --okey-border:         #D5D5D4;
+  --okey-border-strong:  #B9B1B0;
+
+  /* ─── Radii ─── */
+  --okey-r-xs:   4px;
+  --okey-r-sm:   6px;
+  --okey-r-md:   12px;
+  --okey-r-lg:   24px;
+  --okey-r-pill: 999px;
+
+  /* ─── Shadows ─── */
+  --okey-shadow-1: 0 1px 2px rgba(16, 39, 63, 0.04), 0 1px 1px rgba(16, 39, 63, 0.02);
+  --okey-shadow-2: 0 6px 16px rgba(16, 39, 63, 0.06), 0 2px 4px rgba(16, 39, 63, 0.04);
+  --okey-shadow-3: 0 18px 40px rgba(16, 39, 63, 0.08), 0 4px 12px rgba(16, 39, 63, 0.04);
+  --okey-shadow-pop: 0 24px 60px rgba(16, 39, 63, 0.12);
+
+  /* ─── Spacing (4px base) ─── */
+  --okey-s-1:  4px;
+  --okey-s-2:  8px;
+  --okey-s-3:  12px;
+  --okey-s-4:  16px;
+  --okey-s-5:  24px;
+  --okey-s-6:  32px;
+  --okey-s-7:  48px;
+  --okey-s-8:  64px;
+  --okey-s-9:  96px;
+
+  /* ─── Type families ─── */
+  --okey-sans:   "Mulish", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --okey-hand:   "Kalam", "Caveat", "Comic Sans MS", cursive;
+  --okey-mono:   "Oswald", "Space Mono", ui-monospace, monospace;
+
+  /* ─── Type scale ─── */
+  --okey-fs-overline:  12px;
+  --okey-fs-caption:   14px;
+  --okey-fs-body-sm:   15px;
+  --okey-fs-body:      16px;
+  --okey-fs-body-lg:   18px;
+  --okey-fs-h6:        20px;
+  --okey-fs-h5:        24px;
+  --okey-fs-h4:        32px;
+  --okey-fs-h3:        40px;
+  --okey-fs-h2:        56px;
+  --okey-fs-h1:        80px;
+  --okey-fs-display:   128px;
+
+  /* ─── Line heights ─── */
+  --okey-lh-tight:   1.05;
+  --okey-lh-snug:    1.2;
+  --okey-lh-normal:  1.5;
+  --okey-lh-loose:   1.7;
+
+  /* ─── Letter spacing ─── */
+  --okey-ls-tight:   -0.01em;
+  --okey-ls-normal:  0;
+  --okey-ls-wide:    0.04em;
+  --okey-ls-mono:    0.06em;
+
+  /* ─── Motion ─── */
+  --okey-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --okey-ease-decel:    cubic-bezier(0.22, 1, 0.36, 1);
+  --okey-dur-fast:   120ms;
+  --okey-dur-base:   240ms;
+  --okey-dur-page:   480ms;
+
+  /* ─────────────────────────────────────────────────────────
+     shadcn / Tailwind v4 bridging — token names existing
+     Radix + shadcn components already consume, remapped to
+     Okey palette so the rest of the app keeps working.
+     ───────────────────────────────────────────────────────── */
+  --font-size: 16px;
+  --radius:    var(--okey-r-md);
+
+  --background:             var(--okey-surface-1);
+  --foreground:             var(--okey-text-primary);
+  --card:                   var(--okey-surface-2);
+  --card-foreground:        var(--okey-text-primary);
+  --popover:                var(--okey-surface-0);
+  --popover-foreground:     var(--okey-text-primary);
+  --primary:                var(--okey-primary);
+  --primary-foreground:     var(--okey-on-primary);
+  --secondary:              var(--okey-secondary);
+  --secondary-foreground:   var(--okey-on-secondary);
+  --muted:                  var(--okey-surface-3);
+  --muted-foreground:       var(--okey-text-muted);
+  --accent:                 var(--okey-surface-3);
+  --accent-foreground:      var(--okey-text-primary);
+  --destructive:            var(--okey-acc-red);
+  --destructive-foreground: var(--okey-on-primary);
+  --border:                 var(--okey-border);
+  --input:                  transparent;
+  --input-background:       var(--okey-surface-0);
+  --switch-background:      var(--okey-surface-5);
+  --ring:                   var(--okey-border-strong);
   --font-weight-normal: 400;
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #030213;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --font-weight-medium: 500;
+
+  --chart-1: var(--okey-acc-teal);
+  --chart-2: var(--okey-secondary);
+  --chart-3: var(--okey-acc-red);
+  --chart-4: var(--okey-acc-purple);
+  --chart-5: var(--okey-acc-green);
+
+  --sidebar:                      var(--okey-surface-2);
+  --sidebar-foreground:           var(--okey-text-primary);
+  --sidebar-primary:              var(--okey-primary);
+  --sidebar-primary-foreground:   var(--okey-on-primary);
+  --sidebar-accent:               var(--okey-surface-3);
+  --sidebar-accent-foreground:    var(--okey-text-primary);
+  --sidebar-border:               var(--okey-border-soft);
+  --sidebar-ring:                 var(--okey-border-strong);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background:             var(--okey-neutral-9);
+  --foreground:             var(--okey-on-primary);
+  --card:                   var(--okey-neutral-8);
+  --card-foreground:        var(--okey-on-primary);
+  --popover:                var(--okey-neutral-8);
+  --popover-foreground:     var(--okey-on-primary);
+  --primary:                var(--okey-on-primary);
+  --primary-foreground:     var(--okey-primary);
+  --secondary:              var(--okey-secondary);
+  --secondary-foreground:   var(--okey-on-secondary);
+  --muted:                  var(--okey-neutral-8);
+  --muted-foreground:       var(--okey-neutral-5);
+  --accent:                 var(--okey-neutral-8);
+  --accent-foreground:      var(--okey-on-primary);
+  --destructive:            var(--okey-acc-red);
+  --destructive-foreground: var(--okey-on-primary);
+  --border:                 var(--okey-neutral-8);
+  --input:                  var(--okey-neutral-8);
+  --ring:                   var(--okey-neutral-6);
+  --sidebar:                var(--okey-neutral-8);
+  --sidebar-foreground:     var(--okey-on-primary);
+  --sidebar-primary:        var(--okey-secondary);
+  --sidebar-primary-foreground: var(--okey-on-secondary);
+  --sidebar-accent:         var(--okey-neutral-9);
+  --sidebar-accent-foreground:  var(--okey-on-primary);
+  --sidebar-border:         var(--okey-neutral-8);
+  --sidebar-ring:           var(--okey-neutral-6);
 }
 
 @theme inline {
@@ -151,6 +235,28 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Okey scale exposed to Tailwind utilities */
+  --color-okey-primary:   var(--okey-primary);
+  --color-okey-secondary: var(--okey-secondary);
+  --color-okey-cream:     var(--okey-surface-2);
+  --color-okey-cream-2:   var(--okey-surface-3);
+  --color-okey-paper:     var(--okey-surface-1);
+  --color-okey-grey:      var(--okey-surface-4);
+  --color-okey-teal:      var(--okey-acc-teal);
+  --color-okey-red:       var(--okey-acc-red);
+  --color-okey-purple:    var(--okey-acc-purple);
+  --color-okey-green:     var(--okey-acc-green);
+  --color-okey-yellow:    var(--okey-acc-yellow);
+  --color-okey-brown:     var(--okey-acc-brown);
+  --color-okey-blue:      var(--okey-acc-blue);
+  --color-okey-ink:       var(--okey-text-primary);
+  --color-okey-slate:     var(--okey-text-secondary);
+  --color-okey-muted:     var(--okey-text-muted);
+
+  --font-okey-sans: var(--okey-sans);
+  --font-okey-hand: var(--okey-hand);
+  --font-okey-mono: var(--okey-mono);
 }
 
 @layer base {
@@ -160,68 +266,145 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--okey-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   html {
     font-size: var(--font-size);
-    scrollbar-gutter: stable; /* Reservar espacio para scrollbar para evitar shifts */
+    scrollbar-gutter: stable;
   }
 
-  /* Ocultar scrollbar globalmente pero mantener funcionalidad */
   html, body {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  
-  html::-webkit-scrollbar, 
-  body::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari and Opera */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar { display: none; }
+
+  /* Base headings — Okey font + color, conservative sizes.
+     Use .okey-h1…h6 opt-in classes for the full display scale (80/56/40px). */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--okey-sans);
+    color: var(--okey-text-primary);
+    margin: 0;
+  }
+  h1 { font-size: var(--okey-fs-h4); font-weight: 700; line-height: var(--okey-lh-snug); text-wrap: pretty; }
+  h2 { font-size: var(--okey-fs-h5); font-weight: 700; line-height: var(--okey-lh-snug); text-wrap: pretty; }
+  h3 { font-size: var(--okey-fs-h6); font-weight: 600; line-height: var(--okey-lh-snug); }
+  h4 { font-size: var(--okey-fs-body-lg); font-weight: 600; line-height: var(--okey-lh-snug); }
+  h5 { font-size: var(--okey-fs-body); font-weight: 600; line-height: var(--okey-lh-snug); }
+  h6 { font-size: var(--okey-fs-body-sm); font-weight: 600; line-height: var(--okey-lh-snug); }
+
+  p {
+    font-family: var(--okey-sans);
+    font-weight: 400;
+    font-size:   var(--okey-fs-body);
+    line-height: var(--okey-lh-normal);
+    color: var(--okey-text-secondary);
+    text-wrap: pretty;
   }
 
-  /**
-  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
-  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
-  */
+  label, button, input, textarea, select {
+    font-family: var(--okey-sans);
+  }
+  label  { font-size: var(--okey-fs-body); font-weight: 500; line-height: 1.5; }
+  button { font-size: var(--okey-fs-body); font-weight: 500; line-height: 1.5; }
+  input  { font-size: var(--okey-fs-body); font-weight: 400; line-height: 1.5; }
 
-  h1 {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+  a { color: var(--okey-text-link); text-decoration: none; transition: opacity var(--okey-dur-fast) var(--okey-ease-standard); }
+  a:hover { opacity: 0.7; }
+
+  code, kbd, samp, pre {
+    font-family: var(--okey-mono);
+    font-size: 0.95em;
+    letter-spacing: var(--okey-ls-mono);
+    color: var(--okey-text-primary);
   }
 
-  h2 {
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--okey-surface-5);
   }
+}
 
-  h3 {
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+/* ─────────────────────────────────────────────────────────────
+   Okey utility classes — semantic shortcuts for typography,
+   surfaces, buttons, FAB, sticker frame.
+   ───────────────────────────────────────────────────────────── */
 
-  h4 {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+/* Typography */
+.okey-h1 { font-family: var(--okey-sans); font-style: italic; font-weight: 800; font-size: var(--okey-fs-h1); line-height: var(--okey-lh-tight); letter-spacing: var(--okey-ls-tight); color: var(--okey-text-primary); }
+.okey-h2 { font-family: var(--okey-sans); font-style: italic; font-weight: 800; font-size: var(--okey-fs-h2); line-height: var(--okey-lh-tight); color: var(--okey-text-primary); }
+.okey-h3 { font-family: var(--okey-sans); font-weight: 700; font-size: var(--okey-fs-h3); line-height: var(--okey-lh-snug); color: var(--okey-text-primary); }
+.okey-h4 { font-family: var(--okey-sans); font-weight: 700; font-size: var(--okey-fs-h4); line-height: var(--okey-lh-snug); color: var(--okey-text-primary); }
+.okey-h5 { font-family: var(--okey-sans); font-weight: 700; font-size: var(--okey-fs-h5); line-height: var(--okey-lh-snug); color: var(--okey-text-primary); }
+.okey-h6 { font-family: var(--okey-sans); font-weight: 600; font-size: var(--okey-fs-h6); line-height: var(--okey-lh-snug); color: var(--okey-text-primary); }
+.okey-display { font-family: var(--okey-sans); font-style: italic; font-weight: 800; font-size: var(--okey-fs-display); line-height: var(--okey-lh-tight); letter-spacing: var(--okey-ls-tight); color: var(--okey-text-primary); }
 
-  label {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+.okey-body    { font-family: var(--okey-sans); font-weight: 400; font-size: var(--okey-fs-body);    line-height: var(--okey-lh-normal); color: var(--okey-text-secondary); }
+.okey-body-lg { font-family: var(--okey-sans); font-weight: 400; font-size: var(--okey-fs-body-lg); line-height: var(--okey-lh-normal); color: var(--okey-text-secondary); }
+.okey-body-sm { font-family: var(--okey-sans); font-weight: 400; font-size: var(--okey-fs-body-sm); line-height: var(--okey-lh-normal); color: var(--okey-text-secondary); }
 
-  button {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+.okey-caption  { font-family: var(--okey-sans); font-weight: 500; font-size: var(--okey-fs-caption);  color: var(--okey-text-muted); }
+.okey-overline { font-family: var(--okey-mono); font-weight: 400; font-size: var(--okey-fs-overline); letter-spacing: var(--okey-ls-mono); text-transform: uppercase; color: var(--okey-text-muted); }
 
-  input {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
-  }
+.okey-hand { font-family: var(--okey-hand); font-weight: 700; font-size: var(--okey-fs-h4); color: var(--okey-text-primary); }
+.okey-mono { font-family: var(--okey-mono); font-weight: 300; letter-spacing: var(--okey-ls-mono); }
+
+/* Surfaces / cards */
+.okey-card       { background: var(--okey-surface-2); border-radius: var(--okey-r-md); padding: var(--okey-s-5); }
+.okey-card-cool  { background: var(--okey-surface-4); border-radius: var(--okey-r-md); padding: var(--okey-s-5); }
+.okey-card-hero  { background: var(--okey-surface-2); border-radius: var(--okey-r-lg); padding: var(--okey-s-7); }
+.okey-sticker    { border: 1px dashed var(--okey-border); border-radius: var(--okey-r-md); }
+
+/* Buttons */
+.okey-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--okey-s-2);
+  font-family: var(--okey-sans);
+  font-weight: 600;
+  font-size: var(--okey-fs-body);
+  padding: 12px 20px;
+  border-radius: var(--okey-r-sm);
+  border: none;
+  cursor: pointer;
+  transition: opacity var(--okey-dur-fast) var(--okey-ease-standard),
+              transform 80ms var(--okey-ease-standard);
+}
+.okey-btn:active        { transform: scale(0.97); }
+.okey-btn:hover         { opacity: 0.85; }
+.okey-btn:disabled      { opacity: 0.4; cursor: not-allowed; }
+
+.okey-btn-primary   { background: var(--okey-primary);   color: var(--okey-on-primary); }
+.okey-btn-secondary { background: var(--okey-surface-1); color: var(--okey-primary); border: 1.5px solid var(--okey-primary); }
+.okey-btn-ghost     { background: transparent; color: var(--okey-primary); }
+
+/* FAB — signature white circle with navy arrow */
+.okey-fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--okey-surface-0);
+  color: var(--okey-primary);
+  border-radius: var(--okey-r-pill);
+  box-shadow: var(--okey-shadow-2);
+  border: none;
+  cursor: pointer;
+  transition: transform var(--okey-dur-fast) var(--okey-ease-standard),
+              opacity var(--okey-dur-fast) var(--okey-ease-standard);
+}
+.okey-fab:hover  { opacity: 0.85; }
+.okey-fab:active { transform: scale(0.97); }
+.okey-fab--lg    { width: 56px; height: 56px; }
+
+/* Grid-paper / concentric-circle backgrounds (used in playbooks & social posts) */
+.okey-grid-paper {
+  background-image: url('/okey/textures/grid-mask.svg');
+  background-repeat: repeat;
+  background-color: var(--okey-surface-1);
 }
