@@ -408,6 +408,154 @@ app.delete("/make-server-4cb2c9d0/storage/delete", async (c) => {
   }
 });
 
+// ── Playbook Cards (KV-backed) ───────────────────────────────────────────────
+//  Each card lives at  playbook:card:<id>
+//  Shape: { id, title, description, cover_image_url, display_order,
+//           published, slides: [{ id, blocks: ContentBlock[] }],
+//           created_at, updated_at }
+
+app.get("/make-server-4cb2c9d0/playbook-cards", async (c) => {
+  try {
+    const onlyPublished = c.req.query("published") === "true";
+    const cards = (await kv.getByPrefix("playbook:card:")) as any[];
+    const filtered = onlyPublished ? cards.filter((c) => c?.published === true) : cards;
+    filtered.sort(
+      (a, b) =>
+        (a?.display_order ?? 0) - (b?.display_order ?? 0) ||
+        String(a?.created_at ?? "").localeCompare(String(b?.created_at ?? "")),
+    );
+    return c.json({ ok: true, data: filtered });
+  } catch (err: any) {
+    console.error("[Playbook/list] Error inesperado:", err);
+    return c.json({ ok: false, error: err?.message ?? "Error al listar tarjetas" }, 500);
+  }
+});
+
+app.get("/make-server-4cb2c9d0/playbook-cards/:id", async (c) => {
+  try {
+    const id = c.req.param("id");
+    const card = await kv.get(`playbook:card:${id}`);
+    if (!card) return c.json({ ok: false, error: "Tarjeta no encontrada" }, 404);
+    return c.json({ ok: true, data: card });
+  } catch (err: any) {
+    console.error("[Playbook/get] Error inesperado:", err);
+    return c.json({ ok: false, error: err?.message ?? "Error al obtener tarjeta" }, 500);
+  }
+});
+
+app.post("/make-server-4cb2c9d0/playbook-cards", async (c) => {
+  try {
+    const body = await c.req.json();
+    if (!body?.title || typeof body.title !== "string") {
+      return c.json({ ok: false, error: "El título es requerido" }, 400);
+    }
+    const now = new Date().toISOString();
+    const isNew = !body.id;
+    const id =
+      body.id ||
+      `card_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+
+    const existing = isNew ? null : ((await kv.get(`playbook:card:${id}`)) as any);
+
+    const card = {
+      id,
+      title: body.title,
+      description: body.description ?? "",
+      cover_image_url: body.cover_image_url ?? "",
+      category: body.category ?? "",
+      category_color: body.category_color ?? "#16273F",
+      display_order: Number.isFinite(body.display_order) ? body.display_order : 0,
+      published: body.published === true,
+      slides: Array.isArray(body.slides) ? body.slides : [],
+      created_at: existing?.created_at ?? now,
+      updated_at: now,
+    };
+
+    await kv.set(`playbook:card:${id}`, card);
+    console.log(`[Playbook/upsert] ${isNew ? "creada" : "actualizada"}: ${id}`);
+    return c.json({ ok: true, data: card });
+  } catch (err: any) {
+    console.error("[Playbook/upsert] Error inesperado:", err);
+    return c.json({ ok: false, error: err?.message ?? "Error al guardar tarjeta" }, 500);
+  }
+});
+
+app.delete("/make-server-4cb2c9d0/playbook-cards/:id", async (c) => {
+  try {
+    const id = c.req.param("id");
+    await kv.del(`playbook:card:${id}`);
+    console.log(`[Playbook/delete] eliminada: ${id}`);
+    return c.json({ ok: true });
+  } catch (err: any) {
+    console.error("[Playbook/delete] Error inesperado:", err);
+    return c.json({ ok: false, error: err?.message ?? "Error al eliminar tarjeta" }, 500);
+  }
+});
+
+// ── Book signup: notify launch via Resend ────────────────────────────────────
+app.post("/make-server-4cb2c9d0/book/signup", async (c) => {
+  try {
+    const { email } = await c.req.json();
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      return c.json({ ok: false, error: "Correo inválido" }, 400);
+    }
+
+    const apiKey = Deno.env.get("RESEND_API_KEY");
+    if (!apiKey) {
+      console.error("[Book/signup] RESEND_API_KEY no configurado");
+      return c.json({ ok: false, error: "Servicio de email no configurado" }, 500);
+    }
+
+    // Persist the signup
+    await kv.set(`book:signup:${email.toLowerCase()}`, {
+      email,
+      at: new Date().toISOString(),
+    });
+
+    // Notify both the studio and the subscriber
+    const subject = `Diseño Okey — quiero saber del lanzamiento (${email})`;
+    const html = `
+      <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h1 style="color: #16273F; font-size: 22px; margin-bottom: 20px;">Nueva suscripción al libro</h1>
+        <p style="font-size: 15px; line-height: 1.6;">
+          <strong>${email}</strong> desea ser informado/a del lanzamiento del libro
+          <em>Diseño Okey</em>.
+        </p>
+        <p style="color: #999; font-size: 12px; margin-top: 24px;">
+          Registrado desde el formulario de lanzamiento de okey.design
+        </p>
+      </div>
+    `;
+
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Okey! <hola@okey.design>",
+        to: ["hola@okey.design"],
+        reply_to: email,
+        subject,
+        html,
+      }),
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      console.error("[Book/signup] Error de Resend:", result);
+      return c.json({ ok: false, error: result?.message || "Error al enviar email" }, 500);
+    }
+
+    console.log(`[Book/signup] Suscripción registrada: ${email} (msg ${result.id})`);
+    return c.json({ ok: true, messageId: result.id });
+  } catch (err: any) {
+    console.error("[Book/signup] Error inesperado:", err);
+    return c.json({ ok: false, error: err?.message ?? "Error al registrar suscripción" }, 500);
+  }
+});
+
 // ── Contact: send email via Resend ────────────────────────────────────────────
 app.post("/make-server-4cb2c9d0/contact/send", async (c) => {
   try {

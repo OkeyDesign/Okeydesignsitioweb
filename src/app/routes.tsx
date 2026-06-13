@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import { Home } from "./pages/Home";
+import { Landing } from "./pages/Landing";
 import { ClienteDashboard } from "./pages/ClienteDashboard";
 import { AdminLayout } from "./layouts/AdminLayout";
 import { DashboardPage } from "./pages/admin/DashboardPage";
@@ -9,6 +9,7 @@ import { TeamPage } from "./pages/admin/TeamPage";
 import { PortfolioPage } from "./pages/admin/PortfolioPage";
 import { PortfolioLayoutPage } from "./pages/admin/PortfolioLayoutPage";
 import { BlogPage } from "./pages/admin/BlogPage";
+import { CardsPage } from "./pages/admin/CardsPage";
 import { ServicesPage } from "./pages/admin/ServicesPage";
 import { PricingPage } from "./pages/admin/PricingPage";
 import { InvoicesPage } from "./pages/admin/InvoicesPage";
@@ -21,6 +22,7 @@ import { Outlet } from "react-router";
 
 // Public pages
 import { BlogPublicPage } from "./pages/public/BlogPublicPage";
+import { CardsPublicPage } from "./pages/public/CardsPublicPage";
 import { BlogArticlePage } from "./pages/public/BlogArticlePage";
 import { PortfolioPublicPage } from "./pages/public/PortfolioPublicPage";
 import { PortfolioProjectPage } from "./pages/public/PortfolioProjectPage";
@@ -44,11 +46,15 @@ export const router = createBrowserRouter([
       // ── Public site ──────────────────────────────────────────
       {
         path: "/",
-        element: <Home />,
+        element: <Landing />,
       },
       {
         path: "/aprende",
         element: <BlogPublicPage />,
+      },
+      {
+        path: "/cartas",
+        element: <CardsPublicPage />,
       },
       {
         path: "/aprende/:slug",
@@ -158,13 +164,21 @@ export const router = createBrowserRouter([
               </RoleProtectedRoute>
             ) 
           },
-          { 
-            path: "blog",     
+          {
+            path: "blog",
             element: (
               <RoleProtectedRoute allowedRoles={['admin', 'editor']}>
                 <BlogPage />
               </RoleProtectedRoute>
-            ) 
+            )
+          },
+          {
+            path: "tarjetas",
+            element: (
+              <RoleProtectedRoute allowedRoles={['admin', 'editor']}>
+                <CardsPage />
+              </RoleProtectedRoute>
+            ),
           },
           { 
             path: "servicios", 

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Automations Section" subtitle="Two infinite marquees, opposing directions" -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Automatizaciones · Okey Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--okey-surface-1);
+      color: var(--okey-text-primary);
+      font-family: var(--okey-sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────
+       SECTION SHELL
+    ───────────────────────────────── */
+    .auto {
+      position: relative;
+      padding: 120px 64px 140px;
+      background: var(--okey-surface-1);
+      text-align: center;
+      overflow: hidden;
+    }
+    .auto-inner { max-width: 980px; margin: 0 auto; }
+
+    .chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px 8px 12px;
+      background: var(--okey-surface-2);
+      border-radius: 999px;
+      font-family: var(--okey-sans);
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--okey-text-primary);
+      letter-spacing: -0.005em;
+    }
+    .chip .bullet {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--okey-decorative);
+      box-shadow: 0 0 0 3px rgba(251, 174, 5, 0.18);
+    }
+
+    .auto h2 {
+      font-family: var(--okey-sans);
+      font-style: italic;
+      font-weight: 800;
+      font-size: clamp(40px, 5.6vw, 80px);
+      line-height: 1.02;
+      letter-spacing: -0.018em;
+      color: var(--okey-text-primary);
+      margin: 28px auto 22px;
+      text-wrap: balance;
+      max-width: 14ch;
+    }
+    .auto p.lede {
+      font-family: var(--okey-sans);
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--okey-text-secondary);
+      max-width: 620px;
+      margin: 0 auto;
+      text-wrap: pretty;
+    }
+
+    /* ─────────────────────────────────
+       MARQUEE ROWS
+    ───────────────────────────────── */
+    .marquees {
+      margin-top: 72px;
+      display: flex; flex-direction: column;
+      gap: 16px;
+    }
+    .marquee {
+      position: relative;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0) 0%,
+        #000 8%,
+        #000 92%,
+        rgba(0,0,0,0) 100%
+      );
+              mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0) 0%,
+        #000 8%,
+        #000 92%,
+        rgba(0,0,0,0) 100%
+      );
+    }
+    .marquee-track {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      will-change: transform;
+      animation: okey-marquee-rtl 52s linear infinite;
+    }
+    .marquee-track.ltr {
+      animation-name: okey-marquee-ltr;
+      animation-duration: 58s;
+    }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+
+    @keyframes okey-marquee-rtl {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+    @keyframes okey-marquee-ltr {
+      from { transform: translate3d(-50%, 0, 0); }
+      to   { transform: translate3d(0, 0, 0); }
+    }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 22px;
+      background: var(--okey-surface-2);
+      border: 1px solid var(--okey-border-soft);
+      border-radius: 999px;
+      font-family: var(--okey-sans);
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.005em;
+      color: var(--okey-text-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 180ms ease, transform 140ms ease;
+    }
+    .pill i {
+      font-size: 17px;
+      color: var(--okey-text-secondary);
+      stroke-width: 1.75;
+    }
+    .pill:hover { background: var(--okey-surface-3); }
+
+    /* style variants — rhythm */
+    .pill.solid {
+      background: var(--okey-primary);
+      border-color: transparent;
+      color: var(--okey-on-primary);
+    }
+    .pill.solid i { color: var(--okey-decorative); }
+    .pill.outline {
+      background: transparent;
+      border-color: var(--okey-border);
+    }
+    .pill.warm { background: var(--okey-surface-3); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+    }
+
+    @media (max-width: 880px) {
+      .auto { padding: 80px 24px 96px; }
+      .auto h2 { font-size: clamp(36px, 9.5vw, 56px); margin-top: 22px; }
+      .auto p.lede { font-size: 16px; }
+      .marquees { margin-top: 48px; gap: 12px; }
+      .pill { padding: 10px 18px; font-size: 14px; }
+      .pill i { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="auto" aria-label="Automatizaciones">
+    <div class="auto-inner">
+      <span class="chip"><span class="bullet"></span>Automatizaciones</span>
+      <h2>La mejor forma de automatizar tu workflow.</h2>
+      <p class="lede">
+        Operaciones fluidas con automatización inteligente. Eliminamos
+        las tareas repetitivas para que te enfoques en lo que importa.
+      </p>
+    </div>
+
+    <div class="marquees" aria-hidden="true">
+      <!-- Row 1 · right → left -->
+      <div class="marquee">
+        <div class="marquee-track" data-row="top"></div>
+      </div>
+      <!-- Row 2 · left → right -->
+      <div class="marquee">
+        <div class="marquee-track ltr" data-row="bottom"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  /* ─── Build marquee rows (duplicate content for seamless loop) ─── */
+  (function () {
+    const TOP = [
+      { i: 'ti-activity',       t: 'Monitoreo',         v: ''        },
+      { i: 'ti-brain',          t: 'Procesamiento IA',  v: 'solid'   },
+      { i: 'ti-database',       t: 'Pipeline de datos', v: ''        },
+      { i: 'ti-bell',           t: 'Notificaciones',    v: 'outline' },
+      { i: 'ti-rocket',         t: 'Auto-Deploy',       v: ''        },
+      { i: 'ti-circle-check',   t: 'Testing',           v: 'warm'    },
+      { i: 'ti-file-text',      t: 'Reportes',          v: ''        },
+      { i: 'ti-calendar-event', t: 'Programación',      v: 'outline' },
+      { i: 'ti-search',         t: 'Investigación',     v: ''        },
+      { i: 'ti-message-circle', t: 'Feedback',          v: ''        }
+    ];
+    const BOTTOM = [
+      { i: 'ti-users',          t: 'Colaboración',      v: ''        },
+      { i: 'ti-shield-check',   t: 'Seguridad',         v: 'outline' },
+      { i: 'ti-gauge',          t: 'Performance',       v: ''        },
+      { i: 'ti-stack-2',        t: 'Escalabilidad',     v: 'solid'   },
+      { i: 'ti-plug',           t: 'Integraciones',     v: ''        },
+      { i: 'ti-arrows-up-down', t: 'Automatización',    v: ''        },
+      { i: 'ti-git-branch',     t: 'Workflows',         v: 'warm'    },
+      { i: 'ti-bolt',           t: 'Triggers',          v: ''        },
+      { i: 'ti-route',          t: 'Flujos',            v: 'outline' },
+      { i: 'ti-target-arrow',   t: 'Metas',             v: ''        }
+    ];
+
+    const make = (item) => {
+      const cls = 'pill' + (item.v ? ' ' + item.v : '');
+      return `<span class="${cls}"><i class="ti ${item.i}" aria-hidden="true"></i>${item.t}</span>`;
+    };
+
+    document.querySelectorAll('.marquee-track').forEach((row) => {
+      const data = row.dataset.row === 'top' ? TOP : BOTTOM;
+      const html = data.map(make).join('');
+      row.innerHTML = html + html;     /* duplicate for seamless loop */
+    });
+  })();
+  </script>
+
+</body>
+</html>

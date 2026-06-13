@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Hero Section · Arc" subtitle="Cards travel along an arc behind a foreground PNG" -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Hero · Arc carousel · Okey Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--okey-background);
+      color: var(--okey-foreground);
+      font-family: var(--okey-sans);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────
+       HERO SHELL — centered, full viewport
+    ───────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 64px 64px 56px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .axis-tick {
+      position: absolute; top: 32px;
+      font-family: var(--okey-mono);
+      font-size: 10px;
+      letter-spacing: var(--okey-ls-mono);
+      color: var(--okey-muted-foreground);
+      text-transform: uppercase;
+    }
+    .axis-tick.l { left: 64px; }
+    .axis-tick.r { right: 64px; }
+    .axis-divider {
+      position: absolute;
+      left: 64px; right: 64px; top: 64px;
+      height: 1px; background: var(--okey-border-soft);
+      pointer-events: none;
+    }
+
+    /* ─────────────────────────────────────────────
+       STAGE — the arc carousel
+    ───────────────────────────────────────────── */
+    .stage-wrap { width: 100%; }
+    .stage {
+      position: relative;
+      width: 100%;
+      max-width: 1080px;
+      height: 620px;
+      margin: 0 auto;
+      touch-action: pan-y;
+      cursor: grab;
+      user-select: none;
+      /* Soft horizontal edge mask so cards drift in/out without a hard cut. */
+      -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.4) 4%,
+        #000 14%,
+        #000 86%,
+        rgba(0,0,0,0.4) 96%,
+        rgba(0,0,0,0) 100%
+      );
+              mask-image: linear-gradient(
+        to right,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.4) 4%,
+        #000 14%,
+        #000 86%,
+        rgba(0,0,0,0.4) 96%,
+        rgba(0,0,0,0) 100%
+      );
+    }
+    .stage.is-grabbing { cursor: grabbing; }
+
+    .track {
+      position: absolute; inset: 0;
+      overflow: visible;
+    }
+
+    .card {
+      position: absolute;
+      left: 0; top: 0;
+      width: 220px;
+      height: 308px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 20px 44px rgba(16, 39, 63, 0.16),
+                  0 4px 10px rgba(16, 39, 63, 0.08);
+      will-change: transform;
+      backface-visibility: hidden;
+      pointer-events: none;
+    }
+    /* Transitions only kick in after first layout pass to avoid
+       a chained-transform compositor stall on initial paint. */
+    .stage.is-ready .card {
+      transition: transform 520ms cubic-bezier(.22, 1, .36, 1),
+                  box-shadow 520ms ease;
+    }
+    .card.is-active {
+      pointer-events: auto;
+      box-shadow: 0 26px 60px rgba(16, 39, 63, 0.22),
+                  0 6px 14px rgba(16, 39, 63, 0.10);
+    }
+
+    .card .surface {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .card img {
+      width: 92%; height: 92%;
+      object-fit: contain; object-position: center bottom;
+      pointer-events: none;
+      filter: drop-shadow(0 6px 14px rgba(16, 39, 63, 0.18));
+    }
+
+    .card .meta {
+      position: absolute;
+      left: 14px; top: 12px; right: 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: var(--okey-mono);
+      font-size: 10px;
+      letter-spacing: var(--okey-ls-mono);
+      text-transform: uppercase;
+    }
+    .card .meta .dot {
+      width: 7px; height: 7px; border-radius: 999px;
+      background: currentColor; opacity: .9;
+    }
+    .card .meta .num { opacity: .7; }
+
+    /* Tones reuse Okey illustration palette */
+    .card[data-tone="cream"]  { background: var(--okey-muted);     color: var(--okey-foreground); }
+    .card[data-tone="purple"] { background: var(--okey-chart-5);   color: #fff; }
+    .card[data-tone="teal"]   { background: var(--okey-info);      color: #fff; }
+    .card[data-tone="red"]    { background: var(--okey-destructive);color: #fff; }
+    .card[data-tone="green"]  { background: var(--okey-success);   color: #fff; }
+    .card[data-tone="navy"]   { background: var(--okey-primary);   color: #fff; }
+    .card[data-tone="brown"]  { background: var(--okey-secondary); color: #fff; }
+    .card[data-tone="yellow"] { background: var(--okey-decorative);color: var(--okey-primary); }
+
+    /* ─────────────────────────────────────────────
+       FOREGROUND PNG — sits in front, at center
+    ───────────────────────────────────────────── */
+    .foreground {
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      width: 360px;
+      max-width: 38%;
+      transform: translateX(-50%);
+      z-index: 500;          /* above every card */
+      pointer-events: none;
+      filter: drop-shadow(0 18px 28px rgba(16, 39, 63, 0.18));
+    }
+
+    /* ─────────────────────────────────────────────
+       DOTS + HINT
+    ───────────────────────────────────────────── */
+    .footer-row {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px;
+    }
+    .hint {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--okey-mono);
+      font-size: 11px;
+      letter-spacing: var(--okey-ls-mono);
+      text-transform: uppercase;
+      color: var(--okey-muted-foreground);
+    }
+    .hint i { font-size: 14px; color: var(--okey-foreground); opacity: 0.7; }
+    .dots { display: flex; gap: 8px; align-items: center; }
+    .dot-btn {
+      width: 8px; height: 8px; border-radius: 999px;
+      border: none; padding: 0; cursor: pointer;
+      background: var(--okey-input);
+      transition: width 320ms cubic-bezier(.22,1,.36,1),
+                  background 220ms ease;
+    }
+    .dot-btn.active {
+      width: 28px;
+      background: var(--okey-primary);
+    }
+    .dot-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--okey-ring) 28%, transparent);
+    }
+
+    /* ─────────────────────────────────────────────
+       TABLET / MOBILE
+    ───────────────────────────────────────────── */
+    @media (max-width: 880px) {
+      .hero { padding: 40px 16px 48px; gap: 22px; min-height: auto; }
+      .axis-divider { left: 16px; right: 16px; top: 24px; }
+      .axis-tick.l { left: 16px; }
+      .axis-tick.r { right: 16px; }
+      .axis-tick { top: -6px; }
+      .stage { height: 480px; }
+      .card { width: 168px; height: 236px; }
+      .foreground { width: 240px; max-width: 60%; }
+      .footer-row { flex-direction: column-reverse; align-items: flex-start; gap: 16px; padding: 0 8px; }
+    }
+
+    @media (max-width: 460px) {
+      .stage { height: 420px; }
+      .card { width: 144px; height: 204px; }
+      .foreground { width: 200px; max-width: 64%; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero" aria-label="Hero — Arc carousel">
+
+    <span class="axis-divider" aria-hidden="true"></span>
+    <span class="axis-tick l">02 — Hero · Arco</span>
+    <span class="axis-tick r">v1.0 · es-AR</span>
+
+    <div class="stage-wrap">
+      <div class="stage" data-stage aria-roledescription="carousel">
+        <div class="track" data-track></div>
+        <img
+          class="foreground"
+          src="assets/illustrations/user-laptop.png"
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+        >
+      </div>
+    </div>
+
+    <div class="footer-row">
+      <div class="hint">
+        <i class="ti ti-hand-grab" aria-hidden="true"></i>
+        Arrastrá las tarjetas
+      </div>
+      <div class="dots" data-dots role="tablist" aria-label="Carrusel"></div>
+    </div>
+
+  </section>
+
+  <script>
+  (function () {
+    /* ─── Card data — illustration bank ─── */
+    const CARDS = [
+      { src: 'assets/illustrations/sherlock.png',        tone: 'cream',  label: 'Investigación' },
+      { src: 'assets/illustrations/estrategia.png',      tone: 'purple', label: 'Estrategia'    },
+      { src: 'assets/illustrations/arquitecto.png',      tone: 'teal',   label: 'Arquitectura'  },
+      { src: 'assets/illustrations/idea-importante.png', tone: 'red',    label: 'Conceptos'     },
+      { src: 'assets/illustrations/cowork.png',          tone: 'green',  label: 'Equipo'        },
+      { src: 'assets/illustrations/astronaut.png',       tone: 'navy',   label: 'Exploración'   },
+      { src: 'assets/illustrations/estrategia.png',      tone: 'brown',  label: 'Workshops'     }
+    ];
+
+    const stage  = document.querySelector('[data-stage]');
+    const track  = document.querySelector('[data-track]');
+    const dotsEl = document.querySelector('[data-dots]');
+    const N      = CARDS.length;
+
+    let active   = 0;
+    let dragging = false;
+    let startX   = 0;
+    let dragDx   = 0;
+
+    /* Arc geometry (recomputed on resize) */
+    let stageW, stageH, cx, cy, R;
+    const STEP_ANGLE = 20;        // degrees between adjacent cards
+    const PIVOT_BELOW = 80;       // px the pivot sits below the stage bottom
+    const DRAG_STEP_PX = 180;     // px of drag = 1 card step
+
+    function measure() {
+      const r = stage.getBoundingClientRect();
+      stageW = r.width;
+      stageH = r.height;
+      cx = stageW / 2;
+      cy = stageH + PIVOT_BELOW;
+      // Place active card visually above the foreground PNG.
+      const activeCenterY = stageH * 0.40;
+      R = cy - activeCenterY;
+    }
+
+    /* ─── Build cards + dots ─── */
+    CARDS.forEach((c, i) => {
+      const el = document.createElement('article');
+      el.className = 'card';
+      el.dataset.idx = i;
+      el.dataset.tone = c.tone;
+      el.setAttribute('aria-roledescription', 'slide');
+      el.innerHTML = `
+        <div class="meta">
+          <span><span class="dot"></span></span>
+          <span class="num">${String(i + 1).padStart(2, '0')} / ${String(N).padStart(2, '0')}</span>
+        </div>
+        <div class="surface">
+          <img src="${c.src}" alt="${c.label}" draggable="false">
+        </div>
+      `;
+      el.addEventListener('click', () => {
+        const idx = Number(el.dataset.idx);
+        if (idx === active) return;
+        goTo(idx);
+      });
+      track.appendChild(el);
+
+      const d = document.createElement('button');
+      d.className = 'dot-btn' + (i === 0 ? ' active' : '');
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', `Tarjeta ${i + 1}: ${c.label}`);
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    });
+
+    const cards = Array.from(track.querySelectorAll('.card'));
+    const dots  = Array.from(dotsEl.querySelectorAll('.dot-btn'));
+
+    /* ─── Arc layout ─── */
+    function layout(dragOffsetPx = 0) {
+      if (!stageW) measure();
+      const dragFrac = dragOffsetPx / DRAG_STEP_PX; // positive on drag right
+
+      cards.forEach((el, i) => {
+        let off = i - active;
+        if (off >  N / 2) off -= N;
+        if (off < -N / 2) off += N;
+
+        const visualOff = off + dragFrac;
+        const abs = Math.abs(visualOff);
+        const hidden = abs > 3.2;
+
+        const ang = visualOff * STEP_ANGLE;          // degrees
+        const rad = ang * Math.PI / 180;
+
+        /* Pivot at (cx, cy) which is below the stage.
+           Cards sit on an arc of radius R around that pivot. */
+        const x = cx + R * Math.sin(rad);
+        const y = cy - R * Math.cos(rad);
+
+        const scale  = Math.max(0.72, 1 - abs * 0.06);
+        const zIndex = 100 - Math.round(abs * 10);
+
+        el.style.transform =
+          `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) rotate(${ang}deg) scale(${scale})`;
+        el.style.opacity = hidden ? 0 : 1;
+        el.style.zIndex  = zIndex;
+        el.classList.toggle('is-active', off === 0);
+      });
+
+      dots.forEach((d, i) => d.classList.toggle('active', i === active));
+    }
+
+    function wrap(i) { return ((i % N) + N) % N; }
+    function goTo(i) { active = wrap(i); layout(); }
+
+    /* ─── Drag (pointer) only ─── */
+    stage.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      startX = e.clientX;
+      dragDx = 0;
+      stage.classList.add('is-grabbing');
+      stage.setPointerCapture(e.pointerId);
+      cards.forEach(c => c.style.transition = 'transform 60ms linear');
+    });
+    stage.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      dragDx = e.clientX - startX;
+      layout(dragDx);
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      stage.classList.remove('is-grabbing');
+      cards.forEach(c => c.style.transition = '');
+      const moved = Math.round(dragDx / DRAG_STEP_PX);
+      const threshold = DRAG_STEP_PX * 0.3;
+      let next = active;
+      if (Math.abs(dragDx) >= threshold) {
+        /* drag right (positive dragDx) → previous card to center */
+        next = active - Math.sign(dragDx) * Math.max(1, Math.abs(moved));
+      }
+      goTo(next);
+    }
+    stage.addEventListener('pointerup',     endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+    stage.addEventListener('pointerleave',  endDrag);
+
+    /* ─── Resize ─── */
+    let rzT;
+    window.addEventListener('resize', () => {
+      clearTimeout(rzT);
+      rzT = setTimeout(() => { measure(); layout(); }, 80);
+    }, { passive: true });
+
+    /* ─── Init ─── */
+    requestAnimationFrame(() => {
+      measure();
+      layout();
+      requestAnimationFrame(() => stage.classList.add('is-ready'));
+    });
+    setTimeout(() => { measure(); layout(); }, 80);
+  })();
+  </script>
+
+</body>
+</html>

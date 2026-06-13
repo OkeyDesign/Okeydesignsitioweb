@@ -152,9 +152,9 @@ export function QuoteProjectSheet({ open, onOpenChange }: QuoteProjectSheetProps
               <Drawer.Title className="text-3xl font-bold mb-2 text-[#16273F]">
                 Cotizar proyecto
               </Drawer.Title>
-              <p className="text-gray-600 mb-8">
+              <Drawer.Description className="text-gray-600 mb-8">
                 Cuéntanos sobre tu proyecto y te contactaremos pronto
-              </p>
+              </Drawer.Description>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* 1. Nombre del proyecto */}

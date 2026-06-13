@@ -63,6 +63,10 @@ export function LoginSheet({ open, onOpenChange }: LoginSheetProps) {
           className="bg-[#F4EFED] flex flex-col rounded-t-[20px] h-[85vh] mt-24 fixed bottom-0 left-0 right-0 z-[1000]"
           style={{ fontFamily: 'Mulish, sans-serif' }}
         >
+          <Drawer.Title className="sr-only">Iniciar sesión</Drawer.Title>
+          <Drawer.Description className="sr-only">
+            Ingresá con tu correo y contraseña para acceder a tu cuenta.
+          </Drawer.Description>
           <div className="flex-1 overflow-auto">
             <div className="mx-auto w-full max-w-md p-8">
               {/* Handle bar */}

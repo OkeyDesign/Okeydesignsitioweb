@@ -2,7 +2,7 @@ import { Outlet, Link, useLocation, Navigate } from 'react-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import {
-  Users, Briefcase, FileText, Settings,
+  Users, Briefcase, FileText, Settings, Layers3,
   FolderOpen, ArrowUpRight, LayoutDashboard, DollarSign, LogOut, Receipt, Menu, X,
 } from 'lucide-react';
 
@@ -12,6 +12,7 @@ const navItems = [
   { path: '/okey-admin/facturas', label: 'Facturas', icon: Receipt, roles: ['admin'] },
   { path: '/okey-admin/equipo', label: 'Equipo', icon: Briefcase, roles: ['admin', 'editor'] },
   { path: '/okey-admin/portafolio', label: 'Portafolio', icon: FolderOpen, roles: ['admin', 'editor'] },
+  { path: '/okey-admin/tarjetas', label: 'Tarjetas', icon: Layers3, roles: ['admin', 'editor'] },
   { path: '/okey-admin/blog', label: 'Blog', icon: FileText, roles: ['admin', 'editor'] },
   { path: '/okey-admin/servicios', label: 'Servicios', icon: Settings, roles: ['admin', 'editor'] },
   { path: '/okey-admin/precios', label: 'Tarifario', icon: DollarSign, roles: ['admin'] },
